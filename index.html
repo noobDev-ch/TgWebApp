@@ -79,8 +79,6 @@
 		input:focus {
 			border-color: #db5d5d;
 		}
-
-
 	</style>
 </head>
 
@@ -94,8 +92,9 @@
 	<form id="form">
 		<h1>Ordering</h1>
 		<input type="text" placeholder="Name" id="user_name">
-		<input type="text" placeholder="email" id="user_email">
+		<input type="text" placeholder="Email" id="user_email">
 		<input type="text" placeholder="Phone" id="user_phone">
+		<div id="error"></div>
 		<button id="order">Confirm</button>
 	</form>
 	
@@ -114,6 +113,30 @@
 
 		
 		order.addEventListener("click", () => {
+			document.getElementById("error").innerText = '';
+			let name = document.getElementById("user_name").value;
+			let email = document.getElementById("user_email").value;
+			let phone = document.getElementById("user_phone").value;
+			if (name.length < 2) {
+				document.getElementById("error").innerText = 'Name Error';
+				return;
+			}
+			if (email.length < 6) {
+				document.getElementById("error").innerText =  'Email Error';
+				return;
+			}
+			if (phone.length < 2) {
+				document.getElementById("error").innerText = 'Phone Error';
+				return;
+			}
+
+			let data = {
+				name: name,
+				email: email,
+				phone: phone
+			}
+			tg.sendData(JSON.stringify(data));
+
 			tg.close();
 		});
 
